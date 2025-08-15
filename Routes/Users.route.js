@@ -5,7 +5,7 @@ import {
   loginUser,
   checkAuth,
   logOut,
-} from "../Controllers/user.controller.js";
+} from "../Controllers/User.controller.js";
 import { adminAuth } from "../Middleware/adminAuth.js";
 const userRouter = express.Router();
 userRouter.post("/register", registerUser);
