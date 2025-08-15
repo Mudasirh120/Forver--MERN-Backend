@@ -10,7 +10,7 @@ import cookieParser from "cookie-parser";
 import cartRouter from "./Routes/Carts.routes.js";
 import orderRouter from "./Routes/Orders.routes.js";
 const app = express();
-const PORT = 5001 || process.env.PORT;
+const PORT = process.env.PORT || 5001;
 // configDotenv();
 connectDB();
 connectCloudinary();
@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:5174"],
+    origin: [process.env.FRONTEND_URL, process.env.ADMIN_URL],
     credentials: true,
   })
 );
@@ -27,6 +27,7 @@ app.use("/api/user", userRouter);
 app.use("/api/product", productsRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/order", orderRouter);
-app.listen(PORT, () => {
-  console.log(`Server Started at http://localhost:5001`);
-});
+export default app;
+// app.listen(PORT, () => {
+//   console.log(`Server Started at http://localhost:5001`);
+// });
