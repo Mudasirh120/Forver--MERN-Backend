@@ -10,7 +10,7 @@ import cookieParser from "cookie-parser";
 import cartRouter from "./Routes/Carts.routes.js";
 import orderRouter from "./Routes/Orders.routes.js";
 const app = express();
-const PORT = process.env.PORT || 5001;
+export const PORT = process.env.PORT || 5000;
 // configDotenv();
 connectDB();
 connectCloudinary();
@@ -28,6 +28,3 @@ app.use("/api/product", productsRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/order", orderRouter);
 export default app;
-// app.listen(PORT, () => {
-//   console.log(`Server Started at http://localhost:5001`);
-// });

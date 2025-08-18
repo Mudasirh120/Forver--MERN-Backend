@@ -83,17 +83,28 @@ export const editProduct = async (req, res) => {
       subCategory,
       sizes,
       bestSeller,
+      existingImages,
     } = req.body;
+    const existingImagesArray = JSON.parse(existingImages || "[]");
     const files = req.files || {};
     const image1 = files.image1?.[0];
     const image2 = files.image2?.[0];
     const image3 = files.image3?.[0];
     const image4 = files.image4?.[0];
-    const images = [image1, image2, image3, image4].filter(
-      (item) => item != undefined
-    );
-    let imageUrl = await Promise.all(
-      images.map((img) => cloudinaryUpload(img.path, "products"))
+    const images = [image1, image2, image3, image4];
+    let imageUrl = ["", "", "", ""];
+    console.log("existingImages", existingImagesArray);
+    console.log("images", images);
+    if (images.length === 0 && existingImages.length === 0) {
+      return res
+        .status(400)
+        .json({ success: false, message: "No images provided for update" });
+    }
+    imageUrl = await Promise.all(
+      images.map(async (img, index) => {
+        if (img) return await cloudinaryUpload(img.path, "products");
+        return existingImagesArray[index] || null;
+      })
     );
     const findProduct = await Product.findById(id);
     if (!findProduct) {
