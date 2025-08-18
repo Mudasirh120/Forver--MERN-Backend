@@ -9,14 +9,14 @@ export const setCookies = (res, token) => {
   res.cookie("accessToken", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    maxAge: 7 * 24 * 60 * 1000,
+    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+    maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 };
 export const clearCookie = (res) => {
   res.clearCookie("accessToken", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
   });
 };
